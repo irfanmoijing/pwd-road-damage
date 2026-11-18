@@ -1,0 +1,233 @@
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        :root {
+            --govt-green: #0a5c36;
+            --govt-gold: #d4af37;
+            --dark-gray: #2c3e50;
+            --light-gray: #f4f7f6;
+            --accent-red: #e74c3c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-gray);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        
+        header {
+            background-color: var(--govt-green);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 4px solid var(--govt-gold);
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-title img {
+            height: 50px;
+            width: auto;
+            background: white;
+            padding: 2px;
+            border-radius: 50%;
+        }
+
+        .header-text h1 {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .header-text p {
+            font-size: 0.85rem;
+            color: #e0e0e0;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            margin: 20px auto;
+            padding: 0 15px;
+            flex: 1;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            color: var(--govt-green);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--light-gray);
+            padding-bottom: 8px;
+        }
+
+        
+        .upload-area {
+            border: 2px dashed #bbb;
+            border-radius: 6px;
+            padding: 30px;
+            text-align: center;
+            background: #fafafa;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .upload-area:hover {
+            background: #f0f4f1;
+            border-color: var(--govt-green);
+        }
+
+        .upload-area input {
+            display: none;
+        }
+
+        
+        .ai-viewport {
+            position: relative;
+            display: none;
+            margin-top: 15px;
+            text-align: center;
+            background: #000;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .scan-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(46, 204, 113, 0.8);
+            box-shadow: 0 0 10px #2ecc71;
+            display: none;
+            animation: scan 2s infinite linear;
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        #map {
+            height: 200px;
+            border-radius: 6px;
+            margin-top: 8px;
+        }
+
+        
+        .btn {
+            background-color: var(--govt-green);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #074226;
+        }
+
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        
+        .detection-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .badge {
+            background: #e8f4ec;
+            color: var(--govt-green);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border: 1px solid #c2e0cb;
+        }
+
+        .badge-danger {
+            background: #fde8e8;
+            color: var(--accent-red);
+            border-color: #f8b4b4;
+        }
+
+      
+        .success-box {
+            display: none;
+            background: #e8f8f0;
+            border: 1px solid #2ecc71;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            color: #27ae60;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: var(--dark-gray);
+            color: #a0a0a0;
+            font-size: 0.8rem;
+            margin-top: auto;
+        }
+    </style>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PWD Manipur - AI Road Damage Reporting Portal</title>
+</head>
+  <body>
+
+    <header>
+        <div class="header-title">
+            <div style="background: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--govt-green);">
+                PWD
+            </div>
+            <div class="header-text">
+                <h1>Public Works Department (PWD)</h1>
+                <p>Government of Manipur | AI Citizen Road Report Portal</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        
+        <div class="card">
+            <h2>1. Upload / Capture Road Defect Image</h2>
+            <div class="upload-area" onclick="document.getElementById('imageInput').click()">
+                <p>📷 Click to capture or select photo of road damage</p>
+                <small style="color: #777;">Supports JPG, PNG (Mobile Camera Direct Access Supported)</small>
+                <input type="file" id="imageInput" accept="image/*" capture="environment" onchange="processImage(event)">
+            </div>
+
+            <div class="ai-viewport" id="aiViewport">
+                <div class="scan-overlay" id="scanLine"></div>
+                <canvas id="canvas"></canvas>
+            </div>
+
+            <div class="detection-tags" id="detectionResults"></div>
+        </div>
+
+        
+        <div class="card">
+            <h2>2. Location & Report Details</h2>
+            
+            <div class="form-group">
+                <label>GPS Coordinates</label>
+                <input type="text" id="gpsLocation" placeholder="Fetching current GPS location..." readonly>
+            </div>
+
+            <div class="form-group">
+                <label>District / Division (Manipur)</label>
+                <select id="districtSelect">
+                    <option value="Imphal West">Imphal West Division</option>
+                    <option value="Imphal East">Imphal East Division</option>
+                    <option value="Thoubal">Thoubal Division</option>
+                    <option value="Bishnupur">Bishnupur Division</option>
+                    <option value="Churachandpur">Churachandpur Division</option>
+                    <option value="Ukhrul">Ukhrul Division</option>
+                    <option value="Senapati">Senapati Division</option>
+                    <option value="Tamenglong">Tamenglong Division</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Location Map Preview</label>
+                <div id="map"></div>
+            </div>
+
+            <div class="form-group">
+                <label>Additional Landmark Details</label>
+                <textarea id="landmark" rows="2" placeholder="Example: Near North AOC, near Khoyathong Junction..."></textarea>
+            </div>
+
+            <button class="btn" id="submitBtn" onclick="submitReport()">Submit Report to PWD</button></button>
+
+            <div class="success-box" id="successBox">
+                ✔ <strong>Report Submitted Successfully!</strong><br>
+                Grievance Ticket ID: <span id="ticketId" style="font-weight: bold; color: #000;"></span><br>
+                <small>The defect data has been routed to the PWD Engineering Sub-Division.</small>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; Public Works Department (PWD), Government of Manipur. AI Citizen Grievance Portal.
+    </footer>
